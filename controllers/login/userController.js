@@ -12,12 +12,12 @@ module.exports = {
         const salt = await bcrypt.genSalt(10);
         const hash_senha = await bcrypt.hash(senha, salt);
 
-        const checkEmail = `SELECT email FROM users_consorcio WHERE email = ?`;
+        const checkEmail = `SELECT email FROM users_camara WHERE email = ?`;
 
         connection.query(checkEmail, [email], function (error, results, fields) {
             if (!results.length) {
 
-                const newUser = `INSERT INTO users_consorcio(
+                const newUser = `INSERT INTO users_camara(
                         email,
                         senha
                     ) VALUES(
@@ -29,7 +29,7 @@ module.exports = {
                     if (error) {
                         res.json(error);
                     } else {
-                        const user = `SELECT * FROM users_consorcio WHERE email = ?`;
+                        const user = `SELECT * FROM users_camara WHERE email = ?`;
                         connection.query(user, [email], async function (error, resultsUsr, fields) {
 
                             if (resultsUsr.length > 0) {
@@ -56,7 +56,7 @@ module.exports = {
         const senha = req.body.senha;
 
         if (email && senha) {
-            const user = `SELECT * FROM users_consorcio WHERE email = ?`;
+            const user = `SELECT * FROM users_camara WHERE email = ?`;
 
             connection.query(user, [email], async function (error, results, fields) {
                 if (results.length > 0) {
@@ -96,7 +96,7 @@ module.exports = {
 
     //getUserAll
     getUserAll(req, res) {
-        const selectUsers = `SELECT * FROM users_consorcio`;
+        const selectUsers = `SELECT * FROM users_camara`;
         
         connection.query(selectUsers, [], function (error, results, fields) {
             if (error) {
@@ -109,7 +109,7 @@ module.exports = {
 
     //delete user
     async deleteUser(req, res) {
-        const deleteUser = 'DELETE FROM users_consorcio WHERE id =' + parseInt(req.params.id);
+        const deleteUser = 'DELETE FROM users_camara WHERE id =' + parseInt(req.params.id);
         connection.query(deleteUser, [parseInt(req.params.id)], function (error, results, fields) {
             if (error) {
                 res.json(error);

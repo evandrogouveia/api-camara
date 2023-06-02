@@ -1,21 +1,9 @@
 
 const multer = require('multer');
-const authController = require('../controllers/consorcio/authController');
-const atasController = require('../controllers/consorcio/institucional/atasController');
-const consorcioController = require('../controllers/consorcio/institucional/consorcioController');
-const contratosRateioController = require('../controllers/consorcio/institucional/contratosRateioController');
-const andamentoController = require('../controllers/consorcio/licitacoes/andamentoController');
-const licitacoesController = require('../controllers/consorcio/licitacoes/licitacoesController');
-const municipiosController = require('../controllers/consorcio/municipiosController');
-const newsConsorcioCategoryController = require('../controllers/consorcio/news/newsConsorcioCategoryController');
-const newsConsorcioController = require('../controllers/consorcio/news/newsConsorcioController');
-const polosController = require('../controllers/consorcio/polosController');
-const categoriesPsController = require('../controllers/consorcio/processo-seletivo/categoriesPsController');
-const processoSeletivoController = require('../controllers/consorcio/processo-seletivo/processoSeletivoController');
-const transparencyConsorcioController = require('../controllers/consorcio/transparencyConsorcioController');
-const userController = require('../controllers/consorcio/userController');
+const authController = require('../controllers/login/authController');
 const headerController = require('../controllers/header/headerController');
 const homeController = require('../controllers/home/homeController');
+const userController = require('../controllers/login/userController');
 const matterController = require('../controllers/matter/matterController');
 const proceduresController = require('../controllers/matter/proceduresController');
 const sessionController = require('../controllers/matter/sessionController');
@@ -278,119 +266,7 @@ router.patch('/update-lei/:id', multer(leisController).array('file'), leisContro
 //deleta a LEI
 router.delete('/delete-lei/:id', leisController.deleteLei);
 
-/*--------------------------- (CONSORCIO) - ROTAS DE MUNICIPIOS  ---------------------------*/
-//adiciona um novo municipio
-router.post('/new-county', multer(municipiosController).array('file'), municipiosController.newCounty);
-//obtem todos os municipios
-router.get('/all-county', municipiosController.getCounty);
-//atualiza o municipio
-router.patch('/update-county/:id', multer(municipiosController).array('file'), municipiosController.updateCounty);
-//deleta o municipio
-router.delete('/delete-county/:id', municipiosController.deleteCounty);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE POLOS  ---------------------------*/
-//adiciona um novo polo
-router.post('/new-polo', polosController.newPolo);
-//obtem todos os polos
-router.get('/all-polos', polosController.getPolos);
-//atualiza o polo
-router.patch('/update-polo/:id', polosController.updatePolo);
-//deleta o polo
-router.delete('/delete-polo/:id', polosController.deletePolo);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE CONSORCIO ---------------------------*/
-//adiciona dados da consorcio
-router.post('/new-consorcio', consorcioController.newConsorcio);
-//obtem dados da consorcio
-router.get('/all-consorcio', consorcioController.getConsorcio);
-//atualiza dados da consorcio
-router.patch('/update-consorcio/:id', consorcioController.updateConsorcio);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE CATEGORIAS DE NOTÍCIAS ---------------------------*/
-//adiciona uma nova categoria
-router.post('/new-consorcio-category', newsConsorcioCategoryController.newConsorcioCategory);
-//obtem todos as categorias
-router.get('/all-consorcio-categories', newsConsorcioCategoryController.getConsorcioCategories);
-//atualiza a categoria
-router.patch('/update-consorcio-category/:id', newsConsorcioCategoryController.updateConsorcioCategory);
-//deleta a categpria
-router.delete('/delete-consorcio-category/:id', newsConsorcioCategoryController.deleteConsorcioCategory);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE NOTÍCIAS ---------------------------*/
-//adiciona uma nova noticia
-router.post('/new-consorcio-news', multer(newsConsorcioController).array('file'), newsConsorcioController.newConsorcioNews);
-//obtem todos as noticias
-router.get('/all-consorcio-news', newsConsorcioController.getConsorcioNews);
-//atualiza a noticia
-router.patch('/update-consorcio-news/:id', multer(newsConsorcioController).array('file'), newsConsorcioController.updateConsorcioNews);
-//deleta a noticia
-router.delete('/delete-consorcio-news/:id', newsConsorcioController.deleteConsorcioNews);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE PROCESSO SELETIVO ---------------------------*/
-//adiciona uma novo Processo Seletivo
-router.post('/new-processo-seletivo',  multer(processoSeletivoController).array('file'), processoSeletivoController.newProcessoSeletivo);
-//obtem todas os Processo Seletivo
-router.get('/all-processo-seletivo', processoSeletivoController.getAllProcessoSeletivo);
-//atualiza o Processo Seletivo
-router.patch('/update-processo-seletivo/:id', multer(processoSeletivoController).array('file'), processoSeletivoController.updateProcessoSeletivo);
-//deleta o Processo Seletivo
-router.delete('/delete-processo-seletivo/:id', processoSeletivoController.deleteProcessoSeletivo);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE CATEGORIAS DE PROCESSO SELETIVO ---------------------------*/
-//adiciona uma nova categoria de processo seletivo
-router.post('/new-ps-category', categoriesPsController.newPsCategory);
-//obtem todos as categorias de processo seletivo
-router.get('/all-ps-categories', categoriesPsController.getPsCategories);
-//atualiza a categoria de processo seletivo
-router.patch('/update-ps-category/:id', categoriesPsController.updatePsCategory);
-//deleta a categpria de processo seletivo
-router.delete('/delete-ps-category/:id', categoriesPsController.deletePsCategory);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE CONTRATOS DE RATEIO ---------------------------*/
-//adiciona uma novo Contrato
-router.post('/new-contrato',  multer(contratosRateioController).array('file'), contratosRateioController.newContrato);
-//obtem todas os Contratos
-router.get('/all-contratos', contratosRateioController.getAllContratos);
-//atualiza o Contrato
-router.patch('/update-contrato/:id', multer(contratosRateioController).array('file'), contratosRateioController.updateContrato);
-//deleta o Contrato
-router.delete('/delete-contrato/:id', contratosRateioController.deleteContrato);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE ATAS ---------------------------*/
-//adiciona uma nova ata
-router.post('/new-ata',  multer(atasController).array('file'), atasController.newAta);
-//obtem todas as atas
-router.get('/all-atas', atasController.getAllAtas);
-//atualiza a ata
-router.patch('/update-ata/:id', multer(atasController).array('file'), atasController.updateAtas);
-//deleta a ata
-router.delete('/delete-ata/:id', atasController.deleteAta);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE TRANSPARÊNCIA ---------------------------*/
-//adiciona dados da transparencia
-router.post('/new-transparency-consorcio', transparencyConsorcioController.newTransparency);
-//obtem dados da transparencia
-router.get('/all-transparency-consorcio', transparencyConsorcioController.getTransparency);
-//atualiza dados da transparencia
-router.patch('/update-transparency-consorcio/:id', transparencyConsorcioController.updateTransparency);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE LICITAÇÕES ---------------------------*/
-//adiciona uma nova licitacao
-router.post('/new-licitacao',  multer(licitacoesController).array('file'), licitacoesController.newLicitacao);
-//obtem todas as licitacoes
-router.get('/all-licitacoes', licitacoesController.getAllLicitacoes);
-//atualiza a licitacao
-router.patch('/update-licitacao/:id', multer(licitacoesController).array('file'), licitacoesController.updateLicitacao);
-//deleta a licitacao
-router.delete('/delete-licitacao/:id', licitacoesController.deleteLicitacao);
-
-/*--------------------------- (CONSORCIO) - ROTAS DE ANDAMENTO DA LICITAÇÃO ---------------------------*/
-//adiciona dados do andamento
-router.post('/new-progress', andamentoController.newProgress);
-//obtem dados do andamento
-router.get('/all-progress', andamentoController.getProgress);
-
-/*--------------------------- (CONSORCIO) -  ROTAS DE USUÁRIO ---------------------------*/
+/*--------------------------- ROTAS DE USUÁRIO ---------------------------*/
 //adiciona um novo usuário
 router.post('/register', userController.register);
 //login do usuário
@@ -401,5 +277,7 @@ router.get('/user', authController.verifyToken, userController.getUser);
 router.get('/user-all', userController.getUserAll);
 //fazer logout
 router.post('/logout', userController.logout);
+
+
 
 module.exports = router;
