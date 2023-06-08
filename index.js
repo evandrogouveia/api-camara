@@ -16,7 +16,8 @@ app.use(cookieParser());
 const router = require('./src/routes');
 app.use(router);
 
-app.use('/uploads', express.static('uploads'));
+app.use('/api-camara/uploads', express.static('uploads'));
+//app.use('/uploads', express.static('uploads'));
 
 app.use('/api-camara/', router);
 //app.use('/', cors(), router);
