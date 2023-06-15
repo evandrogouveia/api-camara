@@ -11,6 +11,7 @@ module.exports = {
         const typeSession = req.body.typeSession || '';
         const siteShow = req.body.siteShow || '';
         const virtualSession = req.body.virtualSession || '';
+        const callAldermans = req.body.callAldermans;
         const legislature = req.body.legislature || '';
         const description = req.body.description || '';
 
@@ -23,6 +24,7 @@ module.exports = {
             typeSession,
             siteShow,
             virtualSession,
+            callAldermans,
             legislature,
             description
             ) VALUES (
@@ -34,6 +36,7 @@ module.exports = {
                 '${typeSession}',
                 '${siteShow}',
                 '${virtualSession}',
+                '${JSON.stringify(callAldermans)}',
                 '${legislature}',
                 '${description}'
             )`;
@@ -71,6 +74,7 @@ module.exports = {
         const typeSession = req.body.typeSession || '';
         const siteShow = req.body.siteShow || '';
         const virtualSession = req.body.virtualSession || '';
+        const callAldermans = req.body.callAldermans;
         const legislature = req.body.legislature || '';
         const description = req.body.description || '';
 
@@ -82,6 +86,7 @@ module.exports = {
         '`typeSession`= ?,' +
         '`siteShow`= ?,' +
         '`virtualSession`= ?,' +
+        '`callAldermans`= ?,' +
         '`legislature`= ?,' +
         '`description`= ?' +
         'WHERE `sessions`.`ID`= ?';
@@ -96,6 +101,7 @@ module.exports = {
                 typeSession,
                 siteShow,
                 virtualSession,
+                JSON.stringify(callAldermans),
                 legislature,
                 description,
                 id

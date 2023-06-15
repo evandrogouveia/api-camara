@@ -253,6 +253,7 @@ function createTable(conn) {
         "typeSession varchar(150),\n" +
         "siteShow varchar(20),\n" +
         "virtualSession varchar(20),\n" +
+        "callAldermans JSON,\n" +
         "legislature varchar(150),\n" +
         "description varchar(650),\n" +
         "PRIMARY KEY (ID)\n" +
@@ -320,7 +321,7 @@ function createTable(conn) {
 
 
 
-    conn.query(sqlUsersCamara, function (error, results, fields) {
+    conn.query(sqlSessions, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
