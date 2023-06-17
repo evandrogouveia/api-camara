@@ -197,6 +197,8 @@ function createTable(conn) {
         "matterJustification varchar(600),\n" +
         "matterCompleteText varchar(600),\n" +
         "origin varchar(150),\n" +
+        "agentVotation JSON,\n" +
+        "file varchar(200),\n" +
         "PRIMARY KEY (ID)\n" +
         ");";
 
@@ -273,6 +275,8 @@ function createTable(conn) {
         "banner1 varchar(200),\n" +
         "banner2 varchar(200),\n" +
         "banner3 varchar(200),\n" +
+        "banner4 varchar(200),\n" +
+        "banner5 varchar(200),\n" +
         "categories JSON,\n" +
         "PRIMARY KEY (ID)\n" +
         ");";
@@ -319,9 +323,7 @@ function createTable(conn) {
     "PRIMARY KEY (ID)\n" +
     ");";
 
-
-
-    conn.query(sqlSessions, function (error, results, fields) {
+    conn.query(sqlMatter, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

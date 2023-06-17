@@ -98,11 +98,11 @@ router.delete('/delete-party/:id', partiesController.deleteParty);
 
 /*--------------------------- ROTAS DE MATÉRIA ---------------------------*/
 //adiciona uma nova matéria
-router.post('/new-matter', matterController.newMatter);
+router.post('/new-matter', multer(matterController).array('file'), matterController.newMatter);
 //obtem todos as matérias
 router.get('/all-matter', matterController.getAllMatter);
 //atualiza a matéria
-router.patch('/update-matter/:id', matterController.updateMatter);
+router.patch('/update-matter/:id', multer(matterController).array('file'), matterController.updateMatter);
 //deleta a matéria
 router.delete('/delete-matter/:id', matterController.deleteMatter);
 

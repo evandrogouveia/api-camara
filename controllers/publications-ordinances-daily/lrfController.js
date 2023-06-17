@@ -57,7 +57,7 @@ module.exports = {
     },
 
     getAllLrf(req, res) {
-        const selectLrf = `SELECT * FROM lrf ORDER BY date`;
+        const selectLrf = `SELECT * FROM lrf ORDER BY date DESC`;
 
         connection.query(selectLrf, [], function (error, results, fields) {
             if (error) {

@@ -1,20 +1,39 @@
 const connection = require('../../database/connection');
+const multer = require('multer');
+let fs = require('fs-extra');
 
 module.exports = {
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            let path = `./uploads/matter`;
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path); //gera o diretório automaticamente
+            }
+            cb(null, path);
+        },
+        filename: function (req, files, cb) {
+            cb(null, `${Date.now()}-${files.originalname}`);
+        }
+    }),
+
     //cadastra nova matéria
     newMatter(req, res) {
-        const matterDate = req.body.matterDate || '';
-        const matterNumber = req.body.matterNumber || '';
-        const matterExercise = req.body.matterExercise || '';
-        const matterType = req.body.matterType || '';
-        const originType = req.body.originType || '';
-        const showOnSite = req.body.showOnSite || '';
-        const votationType = req.body.votationType || '';
-        const matterDescription = req.body.matterDescription || '';
-        const matterBody = req.body.matterBody || '';
-        const matterJustification = req.body.matterJustification || '';
-        const matterCompleteText = req.body.matterCompleteText || '';
-        const origin = req.body.origin || '';
+        let dataForm = JSON.parse(req.body.formMatter);
+
+        const matterDate = dataForm.matterDate || '';
+        const matterNumber = dataForm.matterNumber || '';
+        const matterExercise = dataForm.matterExercise || '';
+        const matterType = dataForm.matterType || '';
+        const originType = dataForm.originType || '';
+        const showOnSite = dataForm.showOnSite || '';
+        const votationType = dataForm.votationType || '';
+        const matterDescription = dataForm.matterDescription || '';
+        const matterBody = dataForm.matterBody || '';
+        const matterJustification = dataForm.matterJustification || '';
+        const matterCompleteText = dataForm.matterCompleteText || '';
+        const origin = dataForm.origin || '';
+        const agentVotation = dataForm.agentVotation || '';
+        const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : '';
 
         const newMatter = `INSERT INTO matter(
              matterDate,
@@ -28,7 +47,9 @@ module.exports = {
              matterBody,
              matterJustification,
              matterCompleteText,
-             origin
+             origin,
+             agentVotation,
+             file
             ) VALUES (
                 '${matterDate}',
                 '${matterNumber}', 
@@ -41,7 +62,9 @@ module.exports = {
                 '${matterBody}',
                 '${matterJustification}',
                 '${matterCompleteText}',
-                '${origin}'
+                '${origin}',
+                '${JSON.stringify(agentVotation)}',
+                '${file}'
             )`;
 
         connection.query(newMatter, [], function (error, resultsRegister, fields) {
@@ -68,19 +91,23 @@ module.exports = {
 
     //atualiza a matéria
     updateMatter(req, res) {
+        let dataForm = JSON.parse(req.body.formMatter);
+
         const id = parseInt(req.params.id);
-        const matterDate = req.body.matterDate || '';
-        const matterNumber = req.body.matterNumber || '';
-        const matterExercise = req.body.matterExercise || '';
-        const matterType = req.body.matterType || '';
-        const originType = req.body.originType || '';
-        const showOnSite = req.body.showOnSite || '';
-        const votationType = req.body.votationType || '';
-        const matterDescription = req.body.matterDescription || '';
-        const matterBody = req.body.matterBody || '';
-        const matterJustification = req.body.matterJustification || '';
-        const matterCompleteText = req.body.matterCompleteText || '';
-        const origin = req.body.origin || '';
+        const matterDate = dataForm.matterDate || '';
+        const matterNumber = dataForm.matterNumber || '';
+        const matterExercise = dataForm.matterExercise || '';
+        const matterType = dataForm.matterType || '';
+        const originType = dataForm.originType || '';
+        const showOnSite = dataForm.showOnSite || '';
+        const votationType = dataForm.votationType || '';
+        const matterDescription = dataForm.matterDescription || '';
+        const matterBody = dataForm.matterBody || '';
+        const matterJustification = dataForm.matterJustification || '';
+        const matterCompleteText = dataForm.matterCompleteText || '';
+        const origin = dataForm.origin || '';
+        const agentVotation = dataForm.agentVotation || '';
+        const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : dataForm.file;
 
         const updateMatter = 'UPDATE `matter` SET `matterDate`= ?,' +
         '`matterNumber`= ?,' +
@@ -93,7 +120,9 @@ module.exports = {
         '`matterBody`= ?,' +
         '`matterJustification`= ?,' +
         '`matterCompleteText`= ?,' +
-        '`origin`= ?' +
+        '`origin`= ?,' +
+        '`agentVotation`= ?,' +
+        '`file`= ?' +
         'WHERE `matter`.`ID`= ?';
 
         connection.query(updateMatter, 
@@ -110,6 +139,8 @@ module.exports = {
                 matterJustification,
                 matterCompleteText,
                 origin,
+                JSON.stringify(agentVotation),
+                file,
                 id
             ], function (error, results, fields) {
             if (error) {
