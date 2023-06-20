@@ -269,7 +269,7 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
-    /* CRIAR TABELA DO HEADER*/
+    /* CRIAR TABELA DA HOME*/
     const sqlHome = "CREATE TABLE IF NOT EXISTS home(\n" +
         "ID int NOT NULL AUTO_INCREMENT,\n" +
         "banner1 varchar(200),\n" +
@@ -323,7 +323,24 @@ function createTable(conn) {
     "PRIMARY KEY (ID)\n" +
     ");";
 
-    conn.query(sqlMatter, function (error, results, fields) {
+    /* CRIAR TABELA DE EDIÇÃO DO FOOTER */
+    const sqlEditFooter = "CREATE TABLE IF NOT EXISTS footer (\n" +
+    "ID int NOT NULL AUTO_INCREMENT,\n" +
+    "logo varchar(200),\n" +
+    "linkFacebook varchar(200),\n" +
+    "linkEmail varchar(200),\n" +
+    "linkYoutube varchar(200),\n" +
+    "linkInstagram varchar(200),\n" +
+    "presidente varchar(250),\n" +
+    "cnpj varchar(200),\n" +
+    "telefone varchar(50),\n" +
+    "email varchar(150),\n" +
+    "endereco varchar(600),\n" +
+    "horario varchar(600),\n" +
+    "PRIMARY KEY (ID)\n" +
+    ");";
+
+    conn.query(sqlEditFooter, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

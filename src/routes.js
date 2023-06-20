@@ -25,6 +25,7 @@ const leisController = require('../controllers/publications-ordinances-daily/lei
 const lrfController = require('../controllers/publications-ordinances-daily/lrfController');
 const transparencyController = require('../controllers/transparencyController');
 const videosController = require('../controllers/videos/videosController');
+const footerController = require('../controllers/footer/footerController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -220,12 +221,22 @@ router.patch('/update-header/:id', multer(headerController).fields([
     {name: 'background'},
 ]), headerController.updateHeader);
 
+/*--------------------------- ROTAS DO FOOTER ---------------------------*/
+//cadastra o footer
+router.post('/register-footer', multer(footerController).fields([{name: 'logo'}]), footerController.registerFooter);
+//obtem dados do footer
+router.get('/footer', footerController.getFooter);
+//atualiza o footer
+router.patch('/update-footer/:id', multer(footerController).fields([{name: 'logo'}]), footerController.updateFooter);
+
 /*--------------------------- ROTAS DA HOME ---------------------------*/
 //cadastra a home
 router.post('/register-home', multer(homeController).fields([
     {name: 'banner1'},
     {name: 'banner2'},
-    {name: 'banner3'}
+    {name: 'banner3'},
+    {name: 'banner4'},
+    {name: 'banner5'}
 ]), homeController.registerHome);
 //obtem dados da home
 router.get('/home', homeController.getHome);
@@ -233,7 +244,9 @@ router.get('/home', homeController.getHome);
 router.patch('/update-home/:id', multer(homeController).fields([
     {name: 'banner1'},
     {name: 'banner2'},
-    {name: 'banner3'}
+    {name: 'banner3'},
+    {name: 'banner4'},
+    {name: 'banner5'}
 ]), homeController.updateHome);
 
 /*--------------------------- ROTAS DE VÌDEOS ---------------------------*/
