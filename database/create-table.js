@@ -340,7 +340,25 @@ function createTable(conn) {
     "PRIMARY KEY (ID)\n" +
     ");";
 
-    conn.query(sqlEditFooter, function (error, results, fields) {
+    /* CRIAR TABELA DE CONTRATOS */
+    const sqlContracts = "CREATE TABLE IF NOT EXISTS contracts (\n" +
+    "ID int NOT NULL AUTO_INCREMENT,\n" +
+    "modality varchar(150),\n" +
+    "number varchar(200),\n" +
+    "date varchar(50),\n" +
+    "exercise varchar(50),\n" +
+    "hiredName varchar(600),\n" +
+    "cpfCnpj varchar(100),\n" +
+    "validity JSON,\n" +
+    "globalValue varchar(250),\n" +
+    "monthlyValue varchar(250),\n" +
+    "secretary varchar(250),\n" +
+    "file varchar(250),\n" +
+    "description varchar(6000),\n" +
+    "PRIMARY KEY (ID)\n" +
+    ");";
+
+    conn.query(sqlContracts, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

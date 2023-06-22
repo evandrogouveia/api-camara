@@ -26,6 +26,7 @@ const lrfController = require('../controllers/publications-ordinances-daily/lrfC
 const transparencyController = require('../controllers/transparencyController');
 const videosController = require('../controllers/videos/videosController');
 const footerController = require('../controllers/footer/footerController');
+const contratosController = require('../controllers/contratos-licitacoes/contratosController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -290,6 +291,16 @@ router.get('/user', authController.verifyToken, userController.getUser);
 router.get('/user-all', userController.getUserAll);
 //fazer logout
 router.post('/logout', userController.logout);
+
+/*--------------------------- ROTAS DE CONTRATOS ---------------------------*/
+//adiciona uma novo contrato
+router.post('/new-contract',  multer(contratosController).array('file'), contratosController.newContract);
+//obtem todas os contratos
+router.get('/all-contracts', contratosController.getAllContracts);
+//atualiza o contrato
+router.patch('/update-contract/:id', multer(contratosController).array('file'), contratosController.updateContract);
+//deleta o contrato
+router.delete('/delete-contract/:id', contratosController.deleteContract);
 
 
 

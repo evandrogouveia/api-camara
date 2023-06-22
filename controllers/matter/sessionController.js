@@ -52,7 +52,7 @@ module.exports = {
 
      //retorna todos as sessões
      getAllSessions(req, res) {
-        const selectSession = `SELECT * FROM sessions ORDER BY description`;
+        const selectSession = `SELECT * FROM sessions ORDER BY exercise DESC, number DESC `;
 
         connection.query(selectSession, [], function (error, results, fields) {
             if (error) {
