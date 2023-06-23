@@ -32,6 +32,7 @@ module.exports = {
         const secretary = dataForm.secretary || '';
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/contratos/${req.files[0]?.filename}` : '';
         const description = dataForm.description || '';
+        const IDlicitacao = dataForm.IDlicitacao || '';
 
 
         const newContract = `INSERT INTO contracts(
@@ -46,7 +47,8 @@ module.exports = {
             monthlyValue,
             secretary,
             file,
-            description
+            description,
+            IDlicitacao
             ) VALUES (
                 '${modality}',
                 '${number}', 
@@ -59,7 +61,8 @@ module.exports = {
                 '${monthlyValue}',
                 '${secretary}',
                 '${file}',
-                '${description}'
+                '${description}',
+                '${IDlicitacao}'
             )`;
 
         connection.query(newContract, [], function (error, resultsRegister, fields) {
@@ -100,6 +103,7 @@ module.exports = {
         const secretary = dataForm.secretary || '';
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/contratos/${req.files[0]?.filename}` : dataForm.file;
         const description = dataForm.description || '';
+        const IDlicitacao = dataForm.IDlicitacao || '';
 
         const updateContract = 'UPDATE `contracts` SET `modality`= ?,' +
             '`number`= ?,' +
@@ -112,7 +116,8 @@ module.exports = {
             '`monthlyValue`= ?,' +
             '`secretary`= ?,' +
             '`file`= ?,' +
-            '`description`= ?' +
+            '`description`= ?,' +
+            '`IDlicitacao`= ?' +
             'WHERE `contracts`.`ID`= ?';
 
         connection.query(updateContract, [
@@ -128,6 +133,7 @@ module.exports = {
             secretary,
             file,
             description,
+            IDlicitacao,
             id
         ], function (error, results, fields) {
             if (error) {

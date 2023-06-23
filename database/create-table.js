@@ -317,48 +317,82 @@ function createTable(conn) {
 
     /* CRIAR TABELA DE USUÁRIOS */
     const sqlUsersCamara = "CREATE TABLE IF NOT EXISTS users_camara (\n" +
-    "ID int NOT NULL AUTO_INCREMENT,\n" +
-    "email varchar(50),\n" +
-    "senha varchar(150),\n" +
-    "PRIMARY KEY (ID)\n" +
-    ");";
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "email varchar(50),\n" +
+        "senha varchar(150),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
 
     /* CRIAR TABELA DE EDIÇÃO DO FOOTER */
     const sqlEditFooter = "CREATE TABLE IF NOT EXISTS footer (\n" +
-    "ID int NOT NULL AUTO_INCREMENT,\n" +
-    "logo varchar(200),\n" +
-    "linkFacebook varchar(200),\n" +
-    "linkEmail varchar(200),\n" +
-    "linkYoutube varchar(200),\n" +
-    "linkInstagram varchar(200),\n" +
-    "presidente varchar(250),\n" +
-    "cnpj varchar(200),\n" +
-    "telefone varchar(50),\n" +
-    "email varchar(150),\n" +
-    "endereco varchar(600),\n" +
-    "horario varchar(600),\n" +
-    "PRIMARY KEY (ID)\n" +
-    ");";
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "logo varchar(200),\n" +
+        "linkFacebook varchar(200),\n" +
+        "linkEmail varchar(200),\n" +
+        "linkYoutube varchar(200),\n" +
+        "linkInstagram varchar(200),\n" +
+        "presidente varchar(250),\n" +
+        "cnpj varchar(200),\n" +
+        "telefone varchar(50),\n" +
+        "email varchar(150),\n" +
+        "endereco varchar(600),\n" +
+        "horario varchar(600),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
 
     /* CRIAR TABELA DE CONTRATOS */
     const sqlContracts = "CREATE TABLE IF NOT EXISTS contracts (\n" +
-    "ID int NOT NULL AUTO_INCREMENT,\n" +
-    "modality varchar(150),\n" +
-    "number varchar(200),\n" +
-    "date varchar(50),\n" +
-    "exercise varchar(50),\n" +
-    "hiredName varchar(600),\n" +
-    "cpfCnpj varchar(100),\n" +
-    "validity JSON,\n" +
-    "globalValue varchar(250),\n" +
-    "monthlyValue varchar(250),\n" +
-    "secretary varchar(250),\n" +
-    "file varchar(250),\n" +
-    "description varchar(6000),\n" +
-    "PRIMARY KEY (ID)\n" +
-    ");";
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "modality varchar(150),\n" +
+        "number varchar(200),\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "hiredName varchar(600),\n" +
+        "cpfCnpj varchar(100),\n" +
+        "validity JSON,\n" +
+        "globalValue varchar(250),\n" +
+        "monthlyValue varchar(250),\n" +
+        "secretary varchar(250),\n" +
+        "file varchar(250),\n" +
+        "description varchar(6000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
 
-    conn.query(sqlContracts, function (error, results, fields) {
+    /* CRIAR TABELA DE LICITAÇÕES */
+    const sqlLicitacoes = "CREATE TABLE IF NOT EXISTS licitacoes(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "title varchar(150),\n" +
+        "processNumber varchar(150),\n" +
+        "type varchar(150),\n" +
+        "openingDate varchar(50),\n" +
+        "publicationDate varchar(50),\n" +
+        "estimatedValue varchar(150),\n" +
+        "description varchar(6000),\n" +
+        "files JSON,\n" +
+        "comissionPresident varchar(200),\n" +
+        "responsibleInformin varchar(200),\n" +
+        "responsibleTecnicalOpinion varchar(200),\n" +
+        "responsibleAward varchar(200),\n" +
+        "responsibleHomologation varchar(200),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    /* CRIAR TABELA DE ANDAMENTO LICITAÇÃO */
+    const sqlProgress = "CREATE TABLE IF NOT EXISTS progress(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "licitacaoID int,\n" +
+        "date varchar(50),\n" +
+        "hour varchar(50),\n" +
+        "phase varchar(150),\n" +
+        "situation varchar(150),\n" +
+        "responsible varchar(150),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    const novaColunaContratos = "ALTER TABLE contracts ADD COLUMN IDlicitacao VARCHAR(50) AFTER description";
+    const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN exercise VARCHAR(150) AFTER title";
+
+    conn.query(novaColunaLicitacoes , function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

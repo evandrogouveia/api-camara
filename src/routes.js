@@ -27,6 +27,8 @@ const transparencyController = require('../controllers/transparencyController');
 const videosController = require('../controllers/videos/videosController');
 const footerController = require('../controllers/footer/footerController');
 const contratosController = require('../controllers/contratos-licitacoes/contratosController');
+const licitacoesController = require('../controllers/contratos-licitacoes/licitacoesController');
+const andamentoController = require('../controllers/contratos-licitacoes/andamentoController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -301,6 +303,24 @@ router.get('/all-contracts', contratosController.getAllContracts);
 router.patch('/update-contract/:id', multer(contratosController).array('file'), contratosController.updateContract);
 //deleta o contrato
 router.delete('/delete-contract/:id', contratosController.deleteContract);
+
+/*--------------------------- ROTAS DE LICITAÇÕES ---------------------------*/
+//adiciona uma nova licitacao
+router.post('/new-licitacao',  multer(licitacoesController).array('file'), licitacoesController.newLicitacao);
+//obtem todas as licitacoes
+router.get('/all-licitacoes', licitacoesController.getAllLicitacoes);
+//obtem todas as licitacoes conforme busca
+router.get('/search-licitacoes', licitacoesController.getSearchLicitacoes)
+//atualiza a licitacao
+router.patch('/update-licitacao/:id', multer(licitacoesController).array('file'), licitacoesController.updateLicitacao);
+//deleta a licitacao
+router.delete('/delete-licitacao/:id', licitacoesController.deleteLicitacao);
+
+/*--------------------------- ROTAS DE ANDAMENTO DA LICITAÇÃO ---------------------------*/
+//adiciona dados do andamento
+router.post('/new-progress', andamentoController.newProgress);
+//obtem dados do andamento
+router.get('/all-progress', andamentoController.getProgress);
 
 
 

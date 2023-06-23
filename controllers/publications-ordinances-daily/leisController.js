@@ -54,7 +54,7 @@ module.exports = {
     },
 
     getAllLeis(req, res) {
-        const selectLei = `SELECT * FROM leis ORDER BY number DESC`;
+        const selectLei = `SELECT * FROM leis ORDER BY date DESC`;
 
         connection.query(selectLei, [], function (error, results, fields) {
             if (error) {

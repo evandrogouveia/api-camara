@@ -43,7 +43,7 @@ module.exports = {
 
      //retorna todos as tramitações
      getAllProcedures(req, res) {
-        const selectMatter = `SELECT * FROM procedures ORDER BY ID`;
+        const selectMatter = `SELECT * FROM procedures ORDER BY procedureDate DESC`;
 
         connection.query(selectMatter, [], function (error, results, fields) {
             if (error) {

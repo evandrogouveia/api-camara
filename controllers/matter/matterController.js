@@ -78,7 +78,7 @@ module.exports = {
 
      //retorna todos as materias
      getAllMatter(req, res) {
-        const selectMatter = `SELECT * FROM matter ORDER BY ID`;
+        const selectMatter = `SELECT * FROM matter ORDER BY matterDate DESC`;
 
         connection.query(selectMatter, [], function (error, results, fields) {
             if (error) {
