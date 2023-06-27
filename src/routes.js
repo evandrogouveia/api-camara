@@ -30,6 +30,8 @@ const contratosController = require('../controllers/contratos-licitacoes/contrat
 const licitacoesController = require('../controllers/contratos-licitacoes/licitacoesController');
 const andamentoController = require('../controllers/contratos-licitacoes/andamentoController');
 const pcsgController = require('../controllers/publications-ordinances-daily/pcsgController');
+const rgiController = require('../controllers/publications-ordinances-daily/rgiController');
+const leiOrganicaController = require('../controllers/publications-ordinances-daily/leiOrganicaController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -332,6 +334,26 @@ router.get('/all-pcsg', pcsgController.getAllPcsg);
 router.patch('/update-pcsg/:id', multer(pcsgController).array('file'), pcsgController.updatePcsg);
 //deleta a PCSG
 router.delete('/delete-pcsg/:id', pcsgController.deletePcsg);
+
+/*--------------------------- ROTAS DE REGIMENTO INTERNO ---------------------------*/
+//adiciona uma nova Rgi
+router.post('/new-rgi',  multer(rgiController).array('file'), rgiController.newRgi);
+//obtem todas as Rgi
+router.get('/all-rgi', rgiController.getAllRgi);
+//atualiza a Rgi
+router.patch('/update-rgi/:id', multer(rgiController).array('file'), rgiController.updateRgi);
+//deleta a Rgi
+router.delete('/delete-rgi/:id', rgiController.deleteRgi);
+
+/*--------------------------- ROTAS DE LEI ORGÃNICA ---------------------------*/
+//adiciona uma nova lei orgânica
+router.post('/new-lei-organica',  multer(leiOrganicaController).array('file'), leiOrganicaController.newLeiOrganica);
+//obtem todas as lei orgânica
+router.get('/all-lei-organica', leiOrganicaController.getAllLeiOrganica);
+//atualiza a lei orgânica
+router.patch('/update-lei-organica/:id', multer(leiOrganicaController).array('file'), leiOrganicaController.updateLeiOrganica);
+//deleta a lei orgânica
+router.delete('/delete-lei-organica/:id', leiOrganicaController.deleteLeiOrganica);
 
 
 

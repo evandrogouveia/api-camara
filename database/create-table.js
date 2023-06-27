@@ -404,7 +404,33 @@ function createTable(conn) {
     const novaColunaContratos = "ALTER TABLE contracts ADD COLUMN IDlicitacao VARCHAR(50) AFTER description";
     const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN exercise VARCHAR(150) AFTER title";
 
-    conn.query(sqlPcsg, function (error, results, fields) {
+    /* CRIAR TABELA DE RGI*/
+    const sqlRgi = "CREATE TABLE IF NOT EXISTS rgi(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "typeFile varchar(150),\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "number int,\n" +
+        "secretary varchar(250),\n" +
+        "file varchar(200),\n" +
+        "description varchar(5000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    /* CRIAR TABELA DE LEI ORGÂNICA*/
+    const sqlLeiOrganica = "CREATE TABLE IF NOT EXISTS leiOrganica(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "typeFile varchar(150),\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "number int,\n" +
+        "secretary varchar(250),\n" +
+        "file varchar(200),\n" +
+        "description varchar(5000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    conn.query(sqlLeiOrganica, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
