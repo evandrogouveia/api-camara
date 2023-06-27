@@ -29,6 +29,7 @@ const footerController = require('../controllers/footer/footerController');
 const contratosController = require('../controllers/contratos-licitacoes/contratosController');
 const licitacoesController = require('../controllers/contratos-licitacoes/licitacoesController');
 const andamentoController = require('../controllers/contratos-licitacoes/andamentoController');
+const pcsgController = require('../controllers/publications-ordinances-daily/pcsgController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -321,6 +322,16 @@ router.delete('/delete-licitacao/:id', licitacoesController.deleteLicitacao);
 router.post('/new-progress', andamentoController.newProgress);
 //obtem dados do andamento
 router.get('/all-progress', andamentoController.getProgress);
+
+/*--------------------------- ROTAS DE PCSG ---------------------------*/
+//adiciona uma nova PCSG
+router.post('/new-pcsg',  multer(pcsgController).array('file'), pcsgController.newPcsg);
+//obtem todas as PCSG
+router.get('/all-pcsg', pcsgController.getAllPcsg);
+//atualiza a PCSG
+router.patch('/update-pcsg/:id', multer(pcsgController).array('file'), pcsgController.updatePcsg);
+//deleta a PCSG
+router.delete('/delete-pcsg/:id', pcsgController.deletePcsg);
 
 
 

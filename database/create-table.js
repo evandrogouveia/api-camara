@@ -389,10 +389,22 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
+    /* CRIAR TABELA DE PCSG*/
+    const sqlPcsg = "CREATE TABLE IF NOT EXISTS pcsg(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "period JSON,\n" +
+        "agent varchar(250),\n" +
+        "secretary varchar(250),\n" +
+        "file varchar(250),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
     const novaColunaContratos = "ALTER TABLE contracts ADD COLUMN IDlicitacao VARCHAR(50) AFTER description";
     const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN exercise VARCHAR(150) AFTER title";
 
-    conn.query(novaColunaLicitacoes , function (error, results, fields) {
+    conn.query(sqlPcsg, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
