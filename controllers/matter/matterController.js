@@ -62,7 +62,7 @@ module.exports = {
                 '${matterBody}',
                 '${matterJustification}',
                 '${matterCompleteText}',
-                '${origin}',
+                '${JSON.stringify(origin)}',
                 '${JSON.stringify(agentVotation)}',
                 '${file}'
             )`;
@@ -138,7 +138,7 @@ module.exports = {
                 matterBody,
                 matterJustification,
                 matterCompleteText,
-                origin,
+                JSON.stringify(origin),
                 JSON.stringify(agentVotation),
                 file,
                 id

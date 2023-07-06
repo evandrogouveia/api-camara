@@ -35,6 +35,7 @@ module.exports = {
         const address = dataForm.address || '';
         const bankDetails = dataForm.bankDetails || '';
         const party = dataForm.party || '';
+        const type = 'Agentes';
 
         const checkAgentExistis = `SELECT name FROM agents WHERE name = ?`;
 
@@ -58,7 +59,8 @@ module.exports = {
                     biography,
                     address,
                     bankDetails,
-                    party
+                    party,
+                    type
                     ) VALUES (
                         '${photo}',
                         '${name}', 
@@ -76,7 +78,8 @@ module.exports = {
                         '${biography}',
                         '${JSON.stringify(address)}',  
                         '${JSON.stringify(bankDetails)}',
-                        '${JSON.stringify(party)}'
+                        '${JSON.stringify(party)}',
+                        '${type}'
                     )`;
 
                 connection.query(newAgent, [], function (error, resultsRegister, fields) {
@@ -113,6 +116,7 @@ module.exports = {
         const address = dataForm.address || '';
         const bankDetails = dataForm.bankDetails || '';
         const party = dataForm.party || '';
+        const type = 'Agentes';
 
         const updateAgent = 'UPDATE `agents` SET `photo`= ?,' +
             '`name`= ?,' +
@@ -130,7 +134,8 @@ module.exports = {
             '`biography`= ?,' +
             '`address`= ?,' +
             '`bankDetails`= ?,' +
-            '`party`= ?' +
+            '`party`= ?,' +
+            '`type`= ?' +
             'WHERE `agents`.`ID`= ?';
 
         connection.query(updateAgent, [
@@ -151,6 +156,7 @@ module.exports = {
             JSON.stringify(address),
             JSON.stringify(bankDetails),
             JSON.stringify(party),
+            type,
             id
         ], function (error, results, fields) {
             if (error) {

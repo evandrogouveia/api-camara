@@ -53,6 +53,7 @@ function createTable(conn) {
         "address JSON,\n" +
         "bankDetails JSON,\n" +
         "party JSON,\n" +
+        "type varchar(150),\n" +
         "PRIMARY KEY (ID)\n" +
         ");";
 
@@ -196,11 +197,12 @@ function createTable(conn) {
         "matterBody varchar(600),\n" +
         "matterJustification varchar(600),\n" +
         "matterCompleteText varchar(600),\n" +
-        "origin varchar(150),\n" +
+        "origin JSON,\n" +
         "agentVotation JSON,\n" +
         "file varchar(200),\n" +
         "PRIMARY KEY (ID)\n" +
         ");";
+
 
     /* CRIAR TABELA DE TIPODS DE EXPEDIENTE*/
     const sqlOfficeHour = "CREATE TABLE IF NOT EXISTS typeofficehour (\n" +
@@ -403,6 +405,7 @@ function createTable(conn) {
 
     const novaColunaContratos = "ALTER TABLE contracts ADD COLUMN IDlicitacao VARCHAR(50) AFTER description";
     const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN exercise VARCHAR(150) AFTER title";
+    const novaColunaAgents = "ALTER TABLE agents ADD COLUMN type VARCHAR(150) AFTER party";
 
     /* CRIAR TABELA DE RGI*/
     const sqlRgi = "CREATE TABLE IF NOT EXISTS rgi(\n" +
@@ -430,7 +433,7 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
-    conn.query(sqlLeiOrganica, function (error, results, fields) {
+    conn.query(novaColunaAgents, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
