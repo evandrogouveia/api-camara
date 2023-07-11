@@ -127,7 +127,7 @@ function createTable(conn) {
     /* CRIAR TABELA DE TIPO DE MATÉRIA*/
     const sqlTypeMatter = "CREATE TABLE IF NOT EXISTS typematter (\n" +
         "ID int NOT NULL AUTO_INCREMENT,\n" +
-        "description varchar(200),\n" +
+        "description varchar(6000),\n" +
         "acronym varchar(150),\n" +
         "hasVote varchar(50),\n" +
         "typeVote varchar(150),\n" +
@@ -193,13 +193,14 @@ function createTable(conn) {
         "originType varchar(50),\n" +
         "showOnSite varchar(20),\n" +
         "votationType varchar(50),\n" +
-        "matterDescription varchar(600),\n" +
+        "matterDescription varchar(6000),\n" +
         "matterBody varchar(600),\n" +
         "matterJustification varchar(600),\n" +
-        "matterCompleteText varchar(600),\n" +
+        "matterCompleteText varchar(6000),\n" +
         "origin JSON,\n" +
         "agentVotation JSON,\n" +
         "file varchar(200),\n" +
+        "IDsessao int,\n" +
         "PRIMARY KEY (ID)\n" +
         ");";
 
@@ -433,7 +434,7 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
-    conn.query(novaColunaAgents, function (error, results, fields) {
+    conn.query(sqlMatter, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

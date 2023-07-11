@@ -34,6 +34,7 @@ module.exports = {
         const origin = dataForm.origin || '';
         const agentVotation = dataForm.agentVotation || '';
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : '';
+        const IDsessao = dataForm.IDsessao;
 
         const newMatter = `INSERT INTO matter(
              matterDate,
@@ -49,7 +50,8 @@ module.exports = {
              matterCompleteText,
              origin,
              agentVotation,
-             file
+             file,
+             IDsessao
             ) VALUES (
                 '${matterDate}',
                 '${matterNumber}', 
@@ -64,7 +66,8 @@ module.exports = {
                 '${matterCompleteText}',
                 '${JSON.stringify(origin)}',
                 '${JSON.stringify(agentVotation)}',
-                '${file}'
+                '${file}',
+                '${IDsessao}'
             )`;
 
         connection.query(newMatter, [], function (error, resultsRegister, fields) {
@@ -108,6 +111,7 @@ module.exports = {
         const origin = dataForm.origin || '';
         const agentVotation = dataForm.agentVotation || '';
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : dataForm.file;
+        const IDsessao = dataForm.IDsessao;
 
         const updateMatter = 'UPDATE `matter` SET `matterDate`= ?,' +
         '`matterNumber`= ?,' +
@@ -122,7 +126,8 @@ module.exports = {
         '`matterCompleteText`= ?,' +
         '`origin`= ?,' +
         '`agentVotation`= ?,' +
-        '`file`= ?' +
+        '`file`= ?,' +
+        '`IDsessao`= ?' +
         'WHERE `matter`.`ID`= ?';
 
         connection.query(updateMatter, 
@@ -141,7 +146,8 @@ module.exports = {
                 JSON.stringify(origin),
                 JSON.stringify(agentVotation),
                 file,
-                id
+                id,
+                IDsessao
             ], function (error, results, fields) {
             if (error) {
                 res.status(400).json({ status: 0, message: 'Erro atualizar dados', error: error });
