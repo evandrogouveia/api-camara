@@ -32,6 +32,7 @@ const andamentoController = require('../controllers/contratos-licitacoes/andamen
 const pcsgController = require('../controllers/publications-ordinances-daily/pcsgController');
 const rgiController = require('../controllers/publications-ordinances-daily/rgiController');
 const leiOrganicaController = require('../controllers/publications-ordinances-daily/leiOrganicaController');
+const diariasController = require('../controllers/publications-ordinances-daily/diariasController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -354,6 +355,16 @@ router.get('/all-lei-organica', leiOrganicaController.getAllLeiOrganica);
 router.patch('/update-lei-organica/:id', multer(leiOrganicaController).array('file'), leiOrganicaController.updateLeiOrganica);
 //deleta a lei orgânica
 router.delete('/delete-lei-organica/:id', leiOrganicaController.deleteLeiOrganica);
+
+/*--------------------------- ROTAS DE DIÁRIAS ---------------------------*/
+//adiciona uma nova diaria
+router.post('/new-diaria',  multer(diariasController).array('file'), diariasController.newDiaria);
+//obtem todas as diaria
+router.get('/all-diarias', diariasController.getAllDiarias);
+//atualiza a diaria
+router.patch('/update-diaria/:id', multer(diariasController).array('file'), diariasController.updateDiarias);
+//deleta a diaria
+router.delete('/delete-diaria/:id', diariasController.deleteDiaria);
 
 
 

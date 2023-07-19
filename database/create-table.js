@@ -434,7 +434,29 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
-    conn.query(sqlMatter, function (error, results, fields) {
+    /* CRIAR TABELA DE DIÁRIAS*/
+    const sqlDiarias = "CREATE TABLE IF NOT EXISTS diarias(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "number varchar(150),\n" +
+        "agent JSON,\n" +
+        "company varchar(250),\n" +
+        "city varchar(250),\n" +
+        "uf varchar(20),\n" +
+        "tripStart varchar(50),\n" +
+        "tripEnd varchar(50),\n" +
+        "quitationDate varchar(50),\n" +
+        "secretary varchar(250),\n" +
+        "quantity varchar(150),\n" +
+        "unitValue varchar(150),\n" +
+        "totalValue varchar(150),\n" +
+        "file varchar(250),\n" +
+        "description varchar(6000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    conn.query(sqlDiarias, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
