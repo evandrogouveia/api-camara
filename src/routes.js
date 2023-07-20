@@ -33,6 +33,8 @@ const pcsgController = require('../controllers/publications-ordinances-daily/pcs
 const rgiController = require('../controllers/publications-ordinances-daily/rgiController');
 const leiOrganicaController = require('../controllers/publications-ordinances-daily/leiOrganicaController');
 const diariasController = require('../controllers/publications-ordinances-daily/diariasController');
+const decretosController = require('../controllers/publications-ordinances-daily/decretosController');
+const portariasController = require('../controllers/publications-ordinances-daily/portariasController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -366,6 +368,24 @@ router.patch('/update-diaria/:id', multer(diariasController).array('file'), diar
 //deleta a diaria
 router.delete('/delete-diaria/:id', diariasController.deleteDiaria);
 
+/*--------------------------- ROTAS DE DECRETOS ---------------------------*/
+//adiciona uma nova decreto
+router.post('/new-decreto',  multer(decretosController).array('file'), decretosController.newDecreto);
+//obtem todas as decreto
+router.get('/all-decretos', decretosController.getAllDecretos);
+//atualiza a decreto
+router.patch('/update-decreto/:id', multer(decretosController).array('file'), decretosController.updateDecreto);
+//deleta a decreto
+router.delete('/delete-decreto/:id', decretosController.deleteDecreto);
 
+/*--------------------------- ROTAS DE PORTARIAS ---------------------------*/
+//adiciona uma nova portaria
+router.post('/new-portaria',  multer(portariasController).array('file'), portariasController.newPortaria);
+//obtem todas as portaria
+router.get('/all-portarias', portariasController.getAllPortarias);
+//atualiza a portaria
+router.patch('/update-portaria/:id', multer(portariasController).array('file'), portariasController.updatePortaria);
+//deleta a portaria
+router.delete('/delete-portaria/:id', portariasController.deletePortaria);
 
 module.exports = router;

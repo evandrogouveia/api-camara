@@ -456,7 +456,38 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
-    conn.query(sqlDiarias, function (error, results, fields) {
+
+    /* CRIAR TABELA DE DECRETOS*/
+    const sqlDecretos = "CREATE TABLE IF NOT EXISTS decretos(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "typeFile varchar(150),\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "number varchar(150),\n" +
+        "secretary varchar(150),\n" +
+        "competence varchar(150),\n" +
+        "file varchar(200),\n" +
+        "description varchar(5000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    /* CRIAR TABELA DE PORTARIAS*/
+    const sqlPortarias = "CREATE TABLE IF NOT EXISTS portarias(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "typeFile varchar(150),\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "number varchar(150),\n" +
+        "agent varchar(150),\n" +
+        "secretary varchar(150),\n" +
+        "file varchar(200),\n" +
+        "description varchar(5000),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    const novaColunaDecretos = "ALTER TABLE decretos ADD COLUMN number VARCHAR(150) AFTER exercise";
+
+    conn.query(sqlPortarias, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
