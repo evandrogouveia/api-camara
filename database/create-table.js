@@ -487,7 +487,15 @@ function createTable(conn) {
 
     const novaColunaDecretos = "ALTER TABLE decretos ADD COLUMN number VARCHAR(150) AFTER exercise";
 
-    conn.query(sqlPortarias, function (error, results, fields) {
+     /* CRIAR TABELA DE SERVIDORES */
+     const sqlServidores = "CREATE TABLE IF NOT EXISTS servidores (\n" +
+     "ID int NOT NULL AUTO_INCREMENT,\n" +
+     "nome varchar(250),\n" +
+     "cargo varchar(150),\n" +
+     "PRIMARY KEY (ID)\n" +
+     ");";
+
+    conn.query(sqlServidores, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

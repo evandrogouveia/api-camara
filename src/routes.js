@@ -35,6 +35,7 @@ const leiOrganicaController = require('../controllers/publications-ordinances-da
 const diariasController = require('../controllers/publications-ordinances-daily/diariasController');
 const decretosController = require('../controllers/publications-ordinances-daily/decretosController');
 const portariasController = require('../controllers/publications-ordinances-daily/portariasController');
+const servidoresController = require('../controllers/publications-ordinances-daily/servidoresController');
 const router = require('express').Router();
 
 router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
@@ -387,5 +388,13 @@ router.get('/all-portarias', portariasController.getAllPortarias);
 router.patch('/update-portaria/:id', multer(portariasController).array('file'), portariasController.updatePortaria);
 //deleta a portaria
 router.delete('/delete-portaria/:id', portariasController.deletePortaria);
+
+/*--------------------------- ROTAS DE SERVIDORES ---------------------------*/
+//adiciona um novo servidor
+router.post('/new-servidor', servidoresController.newServidor);
+//obtem todos os servidores
+router.get('/all-servidores', servidoresController.getAllServidores);
+//deleta o servidor
+router.delete('/delete-servidor/:id', servidoresController.deleteServidor);
 
 module.exports = router;
