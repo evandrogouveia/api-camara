@@ -8,6 +8,8 @@ module.exports = {
     async register(req, res) {
         const email = req.body.email;
         const senha = req.body.senha;
+        const permission = req.body.permission;
+        const agentId = req.body.agentId;
 
         const salt = await bcrypt.genSalt(10);
         const hash_senha = await bcrypt.hash(senha, salt);
@@ -19,10 +21,14 @@ module.exports = {
 
                 const newUser = `INSERT INTO users_camara(
                         email,
-                        senha
+                        senha,
+                        permission,
+                        agentId
                     ) VALUES(
                         '${email}',
-                        '${hash_senha}'
+                        '${hash_senha}',
+                        '${permission}',
+                        '${agentId}'
                     )`;
 
                 connection.query(newUser, [], function (error, resultsRegister, fields) {
@@ -34,9 +40,9 @@ module.exports = {
 
                             if (resultsUsr.length > 0) {
 
-                                token = jwt.sign({ data: resultsUsr }, 'secret', { expiresIn: "1d" });
-
                                 const { senha, hash_senha, ...data } = resultsUsr[0];
+
+                                token = jwt.sign({ data: data }, 'secret', { expiresIn: "1d" });
 
                                 res.status(200).json({ status: 1, message: 'Registrado', data: data, token: token });
                             }
@@ -63,9 +69,10 @@ module.exports = {
                     const dcryptsenha = await bcrypt.compare(senha, results[0].senha);
 
                     if (dcryptsenha) {
-                        token = jwt.sign({ data: results }, 'secret', { expiresIn: "1d" });
-
+                        
                         const { senha, ...data } = results[0];
+
+                        token = jwt.sign({ data: data }, 'secret', { expiresIn: "1d" });
 
                         res.status(200).json({ status: 1, message: 'Autenticado', data: data, token: token });
                     } else {
@@ -83,8 +90,8 @@ module.exports = {
         try {
             jwt.verify(req.headers.authorization, "secret", function (err, decoded) {
                 if (decoded) {
-                    const { senha, ...data } = decoded.data[0];
-                    return res.status(200).json(data);
+                    req.user = decoded.data;
+                    return res.status(200).json(req.user);
                 } else {
                     return res.status(401).json({ message: 'Não autorizado' });
                 }

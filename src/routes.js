@@ -38,7 +38,8 @@ const portariasController = require('../controllers/publications-ordinances-dail
 const servidoresController = require('../controllers/publications-ordinances-daily/servidoresController');
 const router = require('express').Router();
 
-router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
+
+router.get('/', (req, res) => {});
 
 /*--------------------------- ROTAS DE CARGOS ---------------------------*/
 //adiciona um novo cargo

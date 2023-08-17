@@ -94,9 +94,9 @@ module.exports = {
 
     //atualiza a matéria
     updateMatter(req, res) {
-        let dataForm = JSON.parse(req.body.formMatter);
-
         const id = parseInt(req.params.id);
+        let dataForm = JSON.parse(req.body.formMatter);
+     
         const matterDate = dataForm.matterDate || '';
         const matterNumber = dataForm.matterNumber || '';
         const matterExercise = dataForm.matterExercise || '';
@@ -109,10 +109,10 @@ module.exports = {
         const matterJustification = dataForm.matterJustification || '';
         const matterCompleteText = dataForm.matterCompleteText || '';
         const origin = dataForm.origin || '';
-        const agentVotation = dataForm.agentVotation || '';
+        const agentVotation = dataForm.agentVotation;
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : dataForm.file;
         const IDsessao = dataForm.IDsessao;
-
+       
         const updateMatter = 'UPDATE `matter` SET `matterDate`= ?,' +
         '`matterNumber`= ?,' +
         '`matterExercise`= ?,' +
@@ -128,7 +128,7 @@ module.exports = {
         '`agentVotation`= ?,' +
         '`file`= ?,' +
         '`IDsessao`= ?' +
-        'WHERE `matter`.`ID`= ?';
+        ' WHERE `matter`.`ID`= ?';
 
         connection.query(updateMatter, 
             [
@@ -146,8 +146,8 @@ module.exports = {
                 JSON.stringify(origin),
                 JSON.stringify(agentVotation),
                 file,
-                id,
-                IDsessao
+                IDsessao,
+                id
             ], function (error, results, fields) {
             if (error) {
                 res.status(400).json({ status: 0, message: 'Erro atualizar dados', error: error });

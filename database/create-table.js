@@ -495,7 +495,9 @@ function createTable(conn) {
      "PRIMARY KEY (ID)\n" +
      ");";
 
-    conn.query(sqlServidores, function (error, results, fields) {
+     const novaColunaUsersCamara = "ALTER TABLE users_camara ADD COLUMN agentId VARCHAR(150) AFTER ID";
+
+    conn.query(sqlMatter, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

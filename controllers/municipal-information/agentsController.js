@@ -86,7 +86,7 @@ module.exports = {
                     if (error) {
                         res.status(400).json({ status: 0, message: 'Erro ao cadastrar Agente', error: error });
                     } else {
-                        res.status(200).json({ status: 1, message: 'Agente cadastrado!' });
+                        res.status(200).json({ status: 1, message: 'Agente cadastrado!', idAgent: resultsRegister.insertId});
                     }
                 });
             } else {
