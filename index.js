@@ -33,9 +33,11 @@ const router = require('./src/routes');
 
 app.use(router);
 
+app.use('/api-camara/uploads', express.static('uploads'));
+//app.use('/uploads', express.static('uploads'));
 
-app.use('/uploads', express.static('uploads'));
-app.use('/', cors(), router);
+app.use('/api-camara/', router);
+//app.use('/', cors(), router);
 
 http.listen(port);
 console.log('API funcionando!');
