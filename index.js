@@ -4,13 +4,15 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
-const http = require('http').Server(app);
-const io = require('socket.io')(http, { cors: { origins: ['*'] } });
+
 
 var cors = require('cors');
 dotenv.config();
 
 app.use(cors({origin: '*'}));
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http, { cors: { origins: ['*'] } });
 
 io.on('connection', (socket) => {
     socket.on('dadosPainel', (dados) => {
@@ -39,5 +41,6 @@ app.use('/api-camara/uploads', express.static('uploads'));
 app.use('/api-camara/', router);
 //app.use('/', cors(), router);
 
-http.listen(port);
-console.log('API funcionando!');
+http.listen(port, () => {
+    console.log('API funcionando!');
+});
