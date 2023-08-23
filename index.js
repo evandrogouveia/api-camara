@@ -41,7 +41,7 @@ app.use(router);
 app.use('/api-camara/uploads', express.static('uploads'));
 //app.use('/uploads', express.static('uploads'));
 
-app.use('/api-camara/', router);
+app.use('/api-camara', router);
 //app.use('/', cors(), router);
 
 http.listen(port);
