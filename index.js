@@ -5,7 +5,7 @@ const port = process.env.PORT || 3001;
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const http = require('http').createServer(app);
-const io = require('socket.io')(http, { cors: { origins: ['*'] } });
+const io = require('socket.io')(http, {path: '/api-camara/socket.io', cors: { origins: ['*'] } });
 
 var cors = require('cors');
 dotenv.config();
