@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 3001;
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
-const http = require('http').createServer(app);
-const io = require('socket.io')(http, {path: "/api-camara/socket.io", cors: { origins: ['*'] } });
+const http = require('http').Server(app);
+const io = require('socket.io')(http, {cors: { origins: ['*'] } });
 
 var cors = require('cors');
 dotenv.config();
@@ -16,6 +16,11 @@ io.on('connection', (socket) => {
     socket.on('dadosPainel', (dados) => {
         console.log(dados);
         io.emit('dadosPainel', dados);
+    })
+
+    socket.on('dadosInscricao', (dados) => {
+        console.log(dados);
+        io.emit('dadosInscricao', dados);
     })
 
     socket.on('disconnect', () => {
