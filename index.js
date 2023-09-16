@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {path:"/api-camara/socket.io" ,cors: { origins: ['*'] } });
+//const io = require('socket.io')(http, {cors: { origins: ['*'] } });
 
 var cors = require('cors');
 dotenv.config();
@@ -21,6 +22,10 @@ io.on('connection', (socket) => {
     socket.on('dadosInscricao', (dados) => {
         console.log(dados);
         io.emit('dadosInscricao', dados);
+    })
+
+    socket.on('timer', (dados) => {
+        io.emit('timer', dados);
     })
 
     socket.on('disconnect', () => {
