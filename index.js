@@ -15,12 +15,10 @@ app.use(cors({origin: '*'}));
 
 io.on('connection', (socket) => {
     socket.on('dadosPainel', (dados) => {
-        console.log(dados);
         io.emit('dadosPainel', dados);
     })
 
     socket.on('dadosInscricao', (dados) => {
-        console.log(dados);
         io.emit('dadosInscricao', dados);
     })
 
