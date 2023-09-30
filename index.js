@@ -26,6 +26,10 @@ io.on('connection', (socket) => {
         io.emit('timer', dados);
     })
 
+    socket.on('quorum', (dados) => {
+        io.emit('quorum', dados);
+    })
+
     socket.on('disconnect', () => {
         console.log(`Socket ${socket.id} has just disconnected. `);
     })
@@ -44,8 +48,8 @@ app.use(router);
 app.use('/api-camara/uploads', express.static('uploads'));
 //app.use('/uploads', express.static('uploads'));
 
-app.use('/api-camara', router);
-//app.use('/', cors(), router);
+//app.use('/api-camara', router);
+app.use('/', cors(), router);
 
 http.listen(port);
 console.log('API funcionando!');
