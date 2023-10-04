@@ -36,6 +36,7 @@ const diariasController = require('../controllers/publications-ordinances-daily/
 const decretosController = require('../controllers/publications-ordinances-daily/decretosController');
 const portariasController = require('../controllers/publications-ordinances-daily/portariasController');
 const servidoresController = require('../controllers/publications-ordinances-daily/servidoresController');
+const configuracoes = require('../controllers/painel-votacao/configuracoes');
 const router = require('express').Router();
 
 
@@ -397,5 +398,15 @@ router.post('/new-servidor', servidoresController.newServidor);
 router.get('/all-servidores', servidoresController.getAllServidores);
 //deleta o servidor
 router.delete('/delete-servidor/:id', servidoresController.deleteServidor);
+
+/*--------------------------- ROTAS DE CONFIGURAÇÕES ---------------------------*/
+//adiciona uma nova configuração
+router.post('/new-configuracoes', configuracoes.newConfiguracoes);
+//obtem configurações
+router.get('/all-configuracoes', configuracoes.getConfiguracoes);
+//atualiza configurações
+router.patch('/update-configuracoes/:id', configuracoes.updateConfiguracoes);
+//deleta as configurações
+router.delete('/delete-configuracoes/:id', configuracoes.deleteConfiguracoes);
 
 module.exports = router;

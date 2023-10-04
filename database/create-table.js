@@ -487,17 +487,26 @@ function createTable(conn) {
 
     const novaColunaDecretos = "ALTER TABLE decretos ADD COLUMN number VARCHAR(150) AFTER exercise";
 
-     /* CRIAR TABELA DE SERVIDORES */
-     const sqlServidores = "CREATE TABLE IF NOT EXISTS servidores (\n" +
-     "ID int NOT NULL AUTO_INCREMENT,\n" +
-     "nome varchar(250),\n" +
-     "cargo varchar(150),\n" +
-     "PRIMARY KEY (ID)\n" +
-     ");";
+    /* CRIAR TABELA DE SERVIDORES */
+    const sqlServidores = "CREATE TABLE IF NOT EXISTS servidores (\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "nome varchar(250),\n" +
+        "cargo varchar(150),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
 
-     const novaColunaUsersCamara = "ALTER TABLE users_camara ADD COLUMN agentId VARCHAR(150) AFTER ID";
+    const novaColunaUsersCamara = "ALTER TABLE users_camara ADD COLUMN agentId VARCHAR(150) AFTER ID";
 
-    conn.query(sqlMatter, function (error, results, fields) {
+    /* CRIAR TABELA DE CONFIGURAÇÔES */
+    const sqlConfiguracoes = "CREATE TABLE IF NOT EXISTS configuracoes (\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "minutos JSON,\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    const novaColunaConfiguracoes = "ALTER TABLE configuracoes ADD COLUMN tempoTotal VARCHAR(50) AFTER minutos";
+
+    conn.query(novaColunaConfiguracoes, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
