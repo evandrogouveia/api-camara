@@ -124,6 +124,8 @@ router.delete('/delete-matter/:id', matterController.deleteMatter);
 router.post('/new-session', sessionController.newSession);
 //obtem todos as sessãos
 router.get('/all-session', sessionController.getAllSessions);
+//obtem sessoes limitadas
+router.get('/all-session-limited', sessionController.getSessionsLimited);
 //atualiza a sessão
 router.patch('/update-session/:id', sessionController.updateSession);
 //deleta a sessão

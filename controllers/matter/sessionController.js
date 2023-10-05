@@ -63,6 +63,19 @@ module.exports = {
         });
     },
 
+    //retorna sessões limitadas
+    getSessionsLimited(req, res) {
+        const selectSession = `SELECT * FROM sessions ORDER BY exercise DESC, number DESC LIMIT 3`;
+
+        connection.query(selectSession, [], function (error, results, fields) {
+            if (error) {
+                res.status(400).json({ status: 0, message: 'Erro ao obter dados', error: error });
+            } else {
+                res.status(200).json(results);
+            }
+        });
+    },
+
     //atualiza a sessão
     updateSession(req, res) {
         const id = parseInt(req.params.id);
@@ -112,7 +125,6 @@ module.exports = {
                 res.status(200).json(results);
             }
         });
-
     },
 
     //delete uma sessão
