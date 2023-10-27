@@ -16,29 +16,37 @@ app.use(cors({origin: '*'}));
 io.on('connection', (socket) => {
     socket.on('dadosPainel', (dados) => {
         io.emit('dadosPainel', dados);
-    })
+    });
+
+    socket.on('dadosVotacaoBloco', (dados) => {
+        io.emit('dadosVotacaoBloco', dados);
+    });
+
+    socket.on('removeItemIdStorage', (dados) => {
+        io.emit('removeItemIdStorage', dados);
+    });
 
     socket.on('dadosInscricao', (dados) => {
         io.emit('dadosInscricao', dados);
-    })
+    });
 
     socket.on('timer', (dados) => {
         io.emit('timer', dados);
-    })
+    });
 
     socket.on('quorum', (dados) => {
         io.emit('quorum', dados);
-    })
+    });
 
     socket.on('modalQuorum', (dados) => {
         io.emit('modalQuorum', dados);
-    })
+    });
 
     socket.on('disconnect', () => {
         console.log(`Socket ${socket.id} has just disconnected. `);
-    })
+    });
 
-    console.log(`Socket ${socket.id} has connected. `)
+    console.log(`Socket ${socket.id} has connected. `);
 })
 
 app.use(bodyParser.json({ limit: '250mb' }));

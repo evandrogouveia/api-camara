@@ -4,13 +4,19 @@ module.exports = {
      newConfiguracoes(req, res) {
         const minutos = req.body.minutos;
         const tempoTotal = req.body.tempoTotal;
+        const votacaoEmBloco = req.body.votacaoEmBloco;
+        const votacaoSecreta = req.body.votacaoSecreta;
        
         const newConfiguracoes = `INSERT INTO configuracoes(
             minutos,
-            tempoTotal
+            tempoTotal,
+            votacaoEmBloco,
+            votacaoSecreta 
             ) VALUES (
                 '${JSON.stringify(minutos)}',
-                '${tempoTotal}'
+                '${tempoTotal}',
+                '${votacaoEmBloco}',
+                '${votacaoSecreta}'
             )`;
 
         connection.query(newConfiguracoes, [], function (error, resultsRegister, fields) {
@@ -38,15 +44,21 @@ module.exports = {
         const id = parseInt(req.params.id);
         const minutos = req.body.minutos;
         const tempoTotal = req.body.tempoTotal;
+        const votacaoEmBloco = req.body.votacaoEmBloco;
+        const votacaoSecreta = req.body.votacaoSecreta;
 
         const updateConfiguracoes = 'UPDATE `configuracoes` SET `minutos`= ?,' +
-            '`tempoTotal`= ?' +
-            'WHERE `configuracoes`.`ID`= ?';
+            '`tempoTotal`= ?,' +
+            '`votacaoEmBloco`= ?,' +
+            '`votacaoSecreta`= ?' +
+            ' WHERE `configuracoes`.`ID`= ?';
 
         connection.query(updateConfiguracoes, 
             [
                 JSON.stringify(minutos), 
                 tempoTotal,
+                votacaoEmBloco,
+                votacaoSecreta,
                 id
             ], function (error, results, fields) {
             if (error) {

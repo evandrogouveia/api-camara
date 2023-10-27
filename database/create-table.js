@@ -505,8 +505,9 @@ function createTable(conn) {
         ");";
 
     const novaColunaConfiguracoes = "ALTER TABLE configuracoes ADD COLUMN tempoTotal VARCHAR(50) AFTER minutos";
-
-    conn.query(novaColunaConfiguracoes, function (error, results, fields) {
+    const novaColunaConfiguracoes2 = "ALTER TABLE configuracoes ADD COLUMN votacaoEmBloco BOOLEAN AFTER tempoTotal";
+    const novaColunaConfiguracoes3 = "ALTER TABLE configuracoes ADD COLUMN votacaoSecreta BOOLEAN AFTER votacaoEmBloco";
+    conn.query(novaColunaConfiguracoes3, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();
