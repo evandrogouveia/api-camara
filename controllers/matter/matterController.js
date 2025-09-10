@@ -79,9 +79,23 @@ module.exports = {
         });
     },
 
-     //retorna todos as materias
-     getAllMatter(req, res) {
+    //retorna todos as materias
+    getAllMatter(req, res) {
         const selectMatter = `SELECT * FROM matter ORDER BY matterDate DESC`;
+
+        connection.query(selectMatter, [], function (error, results, fields) {
+            if (error) {
+                res.status(400).json({ status: 0, message: 'Erro ao obter dados', error: error });
+            } else {
+                res.status(200).json(results);
+            }
+        });
+    },
+
+    //retorna todos as pelo ID do vereador
+    getAllMatterByVereadorId(req, res) {
+        const IDvereador = parseInt(req.params.id);
+        const selectMatter = `SELECT m.* FROM matter m WHERE JSON_CONTAINS(m.origin, '{"ID": ${IDvereador}}', '$')`;
 
         connection.query(selectMatter, [], function (error, results, fields) {
             if (error) {
@@ -96,7 +110,7 @@ module.exports = {
     updateMatter(req, res) {
         const id = parseInt(req.params.id);
         let dataForm = JSON.parse(req.body.formMatter);
-     
+
         const matterDate = dataForm.matterDate || '';
         const matterNumber = dataForm.matterNumber || '';
         const matterExercise = dataForm.matterExercise || '';
@@ -112,25 +126,25 @@ module.exports = {
         const agentVotation = dataForm.agentVotation;
         const file = req.files[0]?.filename ? `${process.env.BASE_URL}/uploads/matter/${req.files[0]?.filename}` : dataForm.file;
         const IDsessao = dataForm.IDsessao;
-       
-        const updateMatter = 'UPDATE `matter` SET `matterDate`= ?,' +
-        '`matterNumber`= ?,' +
-        '`matterExercise`= ?,' +
-        '`matterType`= ?,' +
-        '`originType`= ?,' +
-        '`showOnSite`= ?,' +
-        '`votationType`= ?,' +
-        '`matterDescription`= ?,' +
-        '`matterBody`= ?,' +
-        '`matterJustification`= ?,' +
-        '`matterCompleteText`= ?,' +
-        '`origin`= ?,' +
-        '`agentVotation`= ?,' +
-        '`file`= ?,' +
-        '`IDsessao`= ?' +
-        ' WHERE `matter`.`ID`= ?';
 
-        connection.query(updateMatter, 
+        const updateMatter = 'UPDATE `matter` SET `matterDate`= ?,' +
+            '`matterNumber`= ?,' +
+            '`matterExercise`= ?,' +
+            '`matterType`= ?,' +
+            '`originType`= ?,' +
+            '`showOnSite`= ?,' +
+            '`votationType`= ?,' +
+            '`matterDescription`= ?,' +
+            '`matterBody`= ?,' +
+            '`matterJustification`= ?,' +
+            '`matterCompleteText`= ?,' +
+            '`origin`= ?,' +
+            '`agentVotation`= ?,' +
+            '`file`= ?,' +
+            '`IDsessao`= ?' +
+            ' WHERE `matter`.`ID`= ?';
+
+        connection.query(updateMatter,
             [
                 matterDate,
                 matterNumber,
@@ -149,12 +163,12 @@ module.exports = {
                 IDsessao,
                 id
             ], function (error, results, fields) {
-            if (error) {
-                res.status(400).json({ status: 0, message: 'Erro atualizar dados', error: error });
-            } else {
-                res.status(200).json(results);
-            }
-        });
+                if (error) {
+                    res.status(400).json({ status: 0, message: 'Erro atualizar dados', error: error });
+                } else {
+                    res.status(200).json(results);
+                }
+            });
 
     },
 

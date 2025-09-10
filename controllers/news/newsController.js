@@ -62,7 +62,7 @@ module.exports = {
 
     //retorna todos as notícias
     getNews(req, res) {
-        const selectNews = `SELECT * FROM news ORDER BY title`;
+        const selectNews = `SELECT * FROM news ORDER BY publicationDate DESC`;
 
         connection.query(selectNews, [], function (error, results, fields) {
             if (error) {

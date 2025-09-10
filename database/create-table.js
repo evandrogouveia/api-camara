@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 
 const pool = mysql.createPool({
     multipleStatements: true,
-    host: '185.169.99.137',
+    host: '177.85.99.66',
     port: '3306',
     user: 'ce180037_camara',
     password: '*QzBtlN^1^qZ',
@@ -404,8 +404,20 @@ function createTable(conn) {
         "PRIMARY KEY (ID)\n" +
         ");";
 
+    /* CRIAR TABELA DE PCA*/
+    const sqlPca = "CREATE TABLE IF NOT EXISTS pca(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "date varchar(50),\n" +
+        "exercise varchar(50),\n" +
+        "period JSON,\n" +
+        "agent varchar(250),\n" +
+        "secretary varchar(250),\n" +
+        "file varchar(250),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
     const novaColunaContratos = "ALTER TABLE contracts ADD COLUMN IDlicitacao VARCHAR(50) AFTER description";
-    const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN exercise VARCHAR(150) AFTER title";
+    const novaColunaLicitacoes = "ALTER TABLE licitacoes ADD COLUMN modality VARCHAR(250) AFTER processNumber";
     const novaColunaAgents = "ALTER TABLE agents ADD COLUMN type VARCHAR(150) AFTER party";
 
     /* CRIAR TABELA DE RGI*/
@@ -507,7 +519,103 @@ function createTable(conn) {
     const novaColunaConfiguracoes = "ALTER TABLE configuracoes ADD COLUMN tempoTotal VARCHAR(50) AFTER minutos";
     const novaColunaConfiguracoes2 = "ALTER TABLE configuracoes ADD COLUMN votacaoEmBloco BOOLEAN AFTER tempoTotal";
     const novaColunaConfiguracoes3 = "ALTER TABLE configuracoes ADD COLUMN votacaoSecreta BOOLEAN AFTER votacaoEmBloco";
-    conn.query(novaColunaConfiguracoes3, function (error, results, fields) {
+    const novaColunaConfiguracoes4 = "ALTER TABLE configuracoes ADD COLUMN periodoEleitoral BOOLEAN AFTER votacaoSecreta";
+
+    /* CRIAR TABELA DE DISPENSAS-INEXIGIBILIDADE */
+    const sqlDispensasInexigibilidade = "CREATE TABLE IF NOT EXISTS dispensasInexigibilidade(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "titulo varchar(150),\n" +
+        "exercicio varchar(50),\n" +
+        "numeroLicitacao varchar(150),\n" +
+        "modalidate varchar(150),\n" +
+        "tipo varchar(150),\n" +
+        "dataAbertura varchar(50),\n" +
+        "dataDivulgacaoExtrato varchar(50),\n" +
+        "dataRatificacao varchar(50),\n" +
+        "dataDivulgacaoRatificacao varchar(50),\n" +
+        "valorEstimado varchar(150),\n" +
+        "descricao varchar(6000),\n" +
+        "motivoOrigem varchar(6000),\n" +
+        "justificativaPreco varchar(6000),\n" +
+        "fundamentacaoLegal varchar(6000),\n" +
+        "files JSON,\n" +
+        "formasPublicacao JSON,\n" +
+        "responsaveis varchar(200),\n" +
+        "orgaos JSON,\n" +
+        "participantes JSON,\n" +
+        "presidenteComissao varchar(200),\n" +
+        "responsavelInformacao varchar(200),\n" +
+        "responsavelTecnicoJuridico varchar(200),\n" +
+        "responsavelAdjudicao varchar(200),\n" +
+        "responsavelHomologacao varchar(200),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    const novaColunaProgress = "ALTER TABLE progress ADD COLUMN dispensaInexigibilidadeID BOOLEAN AFTER licitacaoID";
+    const novaColunaContratos2 = "ALTER TABLE contracts ADD COLUMN IDdispensaInexigibilidade VARCHAR(50) AFTER IDlicitacao";
+
+
+    /* CRIAR TABELA DE DISPENSAS-INEXIGIBILIDADE */
+    const sqlAvisosDispensa = "CREATE TABLE IF NOT EXISTS avisosDispensa(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "titulo varchar(150),\n" +
+        "exercicio varchar(50),\n" +
+        "modalidade varchar(150),\n" +
+        "dataInicial varchar(50),\n" +
+        "dataFinal varchar(50),\n" +
+        "responsavel varchar(250),\n" +
+        "valorEstimado varchar(150),\n" +
+        "descricao varchar(6000),\n" +
+        "files JSON,\n" +
+        "lotes JSON,\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    /* CRIAR TABELA DE MANIFESTAÇÕES */
+    const sqlManifestacoes = "CREATE TABLE IF NOT EXISTS manifestacoes(\n" +
+        "ID int NOT NULL AUTO_INCREMENT,\n" +
+        "nome varchar(150),\n" +
+        "email varchar(50),\n" +
+        "arquivo varchar(250),\n" +
+        "telefone varchar(50),\n" +
+        "sexo varchar(50),\n" +
+        "dataNascimento varchar(50),\n" +
+        "grauInstrucao varchar(150),\n" +
+        "endereco varchar(600),\n" +
+        "bairro varchar(200),\n" +
+        "estado varchar(200),\n" +
+        "municipio varchar(250),\n" +
+        "anonimo BOOLEAN,\n" +
+        "secretaria varchar(500),\n" +
+        "natureza varchar(200),\n" +
+        "mensagem varchar(6000),\n" +
+        "dataCadastro DATETIME,\n" +
+        "protocolo varchar(50),\n" +
+        "PRIMARY KEY (ID)\n" +
+        ");";
+
+    /* CRIAR TABELA DE REPOSTAS DE MANIFESTAÇÕES */
+    const sqlRespostasManifestacoes = "CREATE TABLE IF NOT EXISTS resposta_manifestacoes(\n" +
+    "ID int NOT NULL AUTO_INCREMENT,\n" +
+    "IDmanifestacao int,\n" +
+    "protocolo varchar(50),\n" +
+    "resposta varchar(6000),\n" +
+    "dataResposta DATETIME,\n" +
+    "PRIMARY KEY (ID),\n" +
+    "FOREIGN KEY (IDmanifestacao) REFERENCES manifestacoes(ID)\n" +
+    ");";
+
+     /* CRIAR TABELA DE LIVES*/
+     const sqlLives = "CREATE TABLE IF NOT EXISTS lives (\n" +
+     "ID int NOT NULL AUTO_INCREMENT,\n" +
+     "title varchar(150) NOT NULL,\n" +
+     "link varchar(150),\n" +
+     "active BOOL,\n" +
+     "PRIMARY KEY (ID)\n" +
+     ");";
+
+
+    conn.query(sqlLives, function (error, results, fields) {
         if (error) return console.log(error);
         console.log('criou a tabela');
         pool.end();

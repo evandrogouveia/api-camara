@@ -26,9 +26,9 @@ const lrfController = require('../controllers/publications-ordinances-daily/lrfC
 const transparencyController = require('../controllers/transparencyController');
 const videosController = require('../controllers/videos/videosController');
 const footerController = require('../controllers/footer/footerController');
-const contratosController = require('../controllers/contratos-licitacoes/contratosController');
-const licitacoesController = require('../controllers/contratos-licitacoes/licitacoesController');
-const andamentoController = require('../controllers/contratos-licitacoes/andamentoController');
+const contratosController = require('../controllers/portal-compras/contratosController');
+const licitacoesController = require('../controllers/portal-compras/licitacoesController');
+const andamentoController = require('../controllers/portal-compras/andamentoController');
 const pcsgController = require('../controllers/publications-ordinances-daily/pcsgController');
 const rgiController = require('../controllers/publications-ordinances-daily/rgiController');
 const leiOrganicaController = require('../controllers/publications-ordinances-daily/leiOrganicaController');
@@ -37,6 +37,12 @@ const decretosController = require('../controllers/publications-ordinances-daily
 const portariasController = require('../controllers/publications-ordinances-daily/portariasController');
 const servidoresController = require('../controllers/publications-ordinances-daily/servidoresController');
 const configuracoes = require('../controllers/painel-votacao/configuracoes');
+const dispensasInexigibilidadeController = require('../controllers/portal-compras/dispensas-inexigibilidadeController');
+const avisosDispensaController = require('../controllers/portal-compras/avisosDispensaController');
+const pcaController = require('../controllers/publications-ordinances-daily/pcaController');
+const ouvidoriaController = require('../controllers/ouvidoria/ouvidoriaController');
+const respostasManifestacaoController = require('../controllers/ouvidoria/respostasManifestacaoController');
+const livesController = require('../controllers/videos/livesController');
 const router = require('express').Router();
 
 
@@ -114,6 +120,8 @@ router.delete('/delete-party/:id', partiesController.deleteParty);
 router.post('/new-matter', multer(matterController).array('file'), matterController.newMatter);
 //obtem todos as matérias
 router.get('/all-matter', matterController.getAllMatter);
+//obtem todos as matérias pelo id do vereador
+router.get('/all-matter/:id', matterController.getAllMatterByVereadorId);
 //atualiza a matéria
 router.patch('/update-matter/:id', multer(matterController).array('file'), matterController.updateMatter);
 //deleta a matéria
@@ -343,6 +351,16 @@ router.patch('/update-pcsg/:id', multer(pcsgController).array('file'), pcsgContr
 //deleta a PCSG
 router.delete('/delete-pcsg/:id', pcsgController.deletePcsg);
 
+/*--------------------------- ROTAS DE PCA ---------------------------*/
+//adiciona uma nova PCA
+router.post('/new-pca',  multer(pcaController).array('file'), pcaController.newPca);
+//obtem todas as PCA
+router.get('/all-pca', pcaController.getAllPca);
+//atualiza a PCA
+router.patch('/update-pca/:id', multer(pcaController).array('file'), pcaController.updatePca);
+//deleta a PCA
+router.delete('/delete-pca/:id', pcaController.deletePca);
+
 /*--------------------------- ROTAS DE REGIMENTO INTERNO ---------------------------*/
 //adiciona uma nova Rgi
 router.post('/new-rgi',  multer(rgiController).array('file'), rgiController.newRgi);
@@ -410,5 +428,55 @@ router.get('/all-configuracoes', configuracoes.getConfiguracoes);
 router.patch('/update-configuracoes/:id', configuracoes.updateConfiguracoes);
 //deleta as configurações
 router.delete('/delete-configuracoes/:id', configuracoes.deleteConfiguracoes);
+
+/*--------------------------- ROTAS DE DISPENSA-INEXIGIBILIDADE ---------------------------*/
+//adiciona uma nova dispensa-inexigibilidade
+router.post('/new-dispensa-inexigibilidade',  multer(dispensasInexigibilidadeController).array('file'), dispensasInexigibilidadeController.newDispensaInexigibilidade);
+//obtem todas as dispensa-inexigibilidade
+router.get('/all-dispensa-inexigibilidade', dispensasInexigibilidadeController.getAllDispensaInexigibilidade);
+//obtem todas as dispensa-inexigibilidade conforme busca
+router.get('/search-dispensa-inexigibilidade', dispensasInexigibilidadeController.getSearchDispensaInexigibilidade)
+//atualiza a dispensa-inexigibilidade
+router.patch('/update-dispensa-inexigibilidade/:id', multer(dispensasInexigibilidadeController).array('file'), dispensasInexigibilidadeController.updateDispensaInexigibilidade);
+//deleta a dispensa-inexigibilidade
+router.delete('/delete-dispensa-inexigibilidade/:id', dispensasInexigibilidadeController.deleteDispensaInexigibilidade);
+
+/*--------------------------- ROTAS DE AVISOS DE DISPENSA ---------------------------*/
+//adiciona uma nova dispensa-inexigibilidade
+router.post('/new-aviso-dispensa',  multer(avisosDispensaController).array('file'), avisosDispensaController.newAviso);
+//obtem todas as dispensa-inexigibilidade
+router.get('/all-aviso-dispensa', avisosDispensaController.getAllAviso);
+//atualiza a dispensa-inexigibilidade
+router.patch('/update-aviso-dispensa/:id', multer(avisosDispensaController).array('file'), avisosDispensaController.updateAviso);
+//deleta a dispensa-inexigibilidade
+router.delete('/delete-aviso-dispensa/:id', avisosDispensaController.deleteAviso);
+
+/*--------------------------- ROTAS DE MANIFESTAÇÕES ---------------------------*/
+//adiciona uma nova manifestação
+router.post('/new-manifestacao',  multer(ouvidoriaController).array('file'), ouvidoriaController.newManifestacao);
+//obtem todas as manifestação
+router.get('/all-manifestacao', ouvidoriaController.getManifestacao);
+//obtem manifestacao por protocolo
+router.get('/manifestacao/:protocolo', ouvidoriaController.getManifestacaoPorProtocolo);
+//atualiza a manifestação
+router.patch('/update-manifestacao/:id', multer(ouvidoriaController).array('file'), ouvidoriaController.updateManifestacao);
+//deleta a manifestação
+router.delete('/delete-manifestacao/:id', ouvidoriaController.deleteManifestacao);
+
+/*--------------------------- ROTAS DE RESPOSTAS DE MANIFESTAÇÕES ---------------------------*/
+//adiciona uma nova resposta de manifestação
+router.post('/new-resposta-manifestacao', respostasManifestacaoController.newRespostaManifestacao);
+//obtem todas as respostas de manifestação
+router.get('/all-resposta-manifestacao', respostasManifestacaoController.getAllRespostasManifestacao);
+//atualiza a resposta da manifestação
+router.patch('/update-resposta-manifestacao/:id', respostasManifestacaoController.updateRespostaManifestacao);
+//deleta a resposta da manifestação
+router.delete('/delete-resposta-manifestacao/:id', respostasManifestacaoController.deleteRespostaManifestacao);
+
+/*--------------------------- ROTAS DE LIVES ---------------------------*/
+router.post('/new-live', livesController.newLive);
+router.get('/all-lives', livesController.getLives);
+router.patch('/update-live/:id', livesController.updateLive);
+router.delete('/delete-live/:id', livesController.deleteLive);
 
 module.exports = router;
